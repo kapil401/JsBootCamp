@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      *{ margin:0; padding:0;box-sizing:border-box;}
+      header{
+        width:100%;
+      line-height: 15vh;
+        background-color:#008000;
+
+      }
+      h1{
+        text-align:center;
+        color:white;
+        font-size:1.8rem;
+        letter-spacing:15px;
+      }
+      section{
+        height: 85vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color:#2ed573;
+      }
+      .gameArea{
+        width: 50%;
+        height: 400px;
+        padding: 20px 0 ;
+        background-color:#f1f3de;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 8px 6px -6px black;
+      }
+       h3{
+         text-align: center;
+         font-size: 1.5rem;
+       }
+       input{
+         width: 40%;
+         padding: 15px 0;
+         text-align: center;
+         border-radius: 25px;
+         background-color: white;
+         color: black;
+         margin: 2rem 0;
+         font-size: 1.1rem;
+       }
+       button{
+         font-size: 1rem;
+         cursor: pointter;
+         outline:none;
+         text-decoration: none;
+         margin-top: 10px;
+         color:#eb4d4b;
+
+       }
+       button.btn{
+         font-weight: 600;
+         padding: 1rem 2rem;
+         background: white;
+         text-transform: uppercase;
+         transition-duration: all;
+       }
+       .hidden{
+         display :none;
+       }
+     </style>
+    <body>
+     <header>
+       <h1>Guess the word game</h1>
+     </header>
+     <section>
+     <div class="gameArea">
+          <h3 class="msg"></h3>
+          <input type="text" class="hidden">
+         <button  class="btn">click here to start</button>
+
+       </div>
+     </section>
+       <script>
+        const msg = document.querySelector('.msg');
+        const  guess  = document.querySelector('input');
+        const btn   = document.querySelector('.btn');
+        let play = false;
+        let newWords = "";
+        let randWords = "";
+        let swords = ['pythons','javascript','c','c++','php','java','c#','html','css'];
+        const creteNewWords = () =>{
+          let ranNum = Math.floor(Math.random() * swords.length);
+          let newTempSwords = swords[ranNum];
+          return newTempSwords;
+        }
+        const scrambleWords = (arr) =>{
+          for(let i= arr.length-1; i>0; i--){
+            let temp = arr[i];
+            let j = Math.floor(Math.random()*(i+1));
+            arr[i] = arr[j];
+            arr[j] = temp;
+          }
+          return arr;
+
+        }
+        btn.addEventListener('click',function(){
+          if(!play){
+            play =true;
+            btn.innerHTML = "guess";
+            guess.classList.toggle('hidden');
+            guess.style.display.visible;
+            newWords =  creteNewWords();
+            randWords = scrambleWords(newWords.split("")).join("");
+            msg.innerHTML = `Guess the word:${randWords}`;
+
+          }
+          else{
+            let tempWord = guess.value;
+            if(tempWord === newWords){
+              play = false;
+              msg.innerHTML = `AWESOME it is correct. it is ${newWords}`;
+              btn.innerHTML = "start Again";
+              guess.classList.toggle('hidden');
+              guess.value = "";
+
+            }
+            else{
+              msg.innerHTML = `soory. it's not correct.plz try again ${randWords}`;
+            }
+          }
+        })
+       </script>
+
+
+
+  </body>
+</html>
