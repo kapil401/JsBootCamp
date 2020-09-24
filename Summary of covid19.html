@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+
+  </head>
+  <body>
+    <h2> Summary of covid19</h2><br>
+    <p id="apiindia"> </p>
+    <script>
+   fetch('https://api.covid19api.com/summary')
+    .then((apidata)=>{
+        return apidata.json();
+    })
+    .then( (actualdata)  => {
+      console.log(actualdata);
+      const mydata = actualdata.Countries[76];
+
+      document.getElementById('apiindia').innerHTML=`The name of the country is:
+       ${mydata.Country}.<br>
+      Total case of: ${mydata.TotalConfirmed}.<br>Total deths of: ${mydata.TotalDeaths}
+      <br> Total recover case: ${mydata.TotalRecovered}`;
+
+    })
+
+.catch((error)=>
+{
+  console.log(`The Error: ${error}`);
+});
+
+</script>
+  </body>
+</html>
